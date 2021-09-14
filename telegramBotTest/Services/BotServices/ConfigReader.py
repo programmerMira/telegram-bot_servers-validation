@@ -13,5 +13,5 @@ class ConfigReader(object):
             return file.read()
 
 
-    __configPath = os.path.dirname(os.path.abspath(__file__)).replace("\\Services\\BotServices", "\\Connections\\Config.json")
-    __fileException = "Отсутсвует файл конфигурации по пути: {0}".format(os.path.dirname(os.path.abspath(__file__)).replace("\\Services\\BotServices", "\\Connections\\Config.json"))
+    __configPath = os.path.dirname(os.path.abspath(__file__)).replace("/Services/BotServices", "/Connections/Config.json")
+    __fileException = "Отсутсвует файл конфигурации по пути: {0}".format(os.path.dirname(os.path.abspath(__file__)).replace("/Services/BotServices", "/Connections/Config.json"))
