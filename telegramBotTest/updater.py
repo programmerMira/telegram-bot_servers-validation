@@ -6,6 +6,7 @@ from Services.BotServices.ConfigReader import ConfigReader
 from Services.Database.ConnectionReader import ConnectionReader
 from Services.Database.DataBaseReader import DataBaseReader
 from Services.Database.DataBaseUpdater import DataBaseUpdater
+from Services.Database.DataBaseWriter import DataBaseWriter
 #endregion
 
 #region variables
@@ -20,6 +21,13 @@ config = jsonParser.Pars(configReader.Read())
 
 databaseReader = DataBaseReader(databaseConnection)
 databaseUpdater = DataBaseUpdater(databaseConnection)
+databaseWriter = DataBaseWriter(databaseConnection)
+#endregion
+
+#region debug area: test con. to db
+#input must be chat id, e.g. "-536304400"
+chatID = "-536304400"
+databaseWriter.WriteChat(chatID)
 #endregion
 
 #region logic
