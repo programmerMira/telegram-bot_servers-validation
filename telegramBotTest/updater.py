@@ -28,6 +28,10 @@ databaseWriter = DataBaseWriter(databaseConnection)
 #input must be chat id, e.g. "-536304400"
 chatID = "-536304400"
 databaseWriter.WriteChat(chatID)
+databaseWriter.WriteEndpointAndChat([chatID, "www.google.com", "Google main page", True])
+
+res=databaseReader.ReadAll()
+print(res)
 #endregion
 
 #region logic
