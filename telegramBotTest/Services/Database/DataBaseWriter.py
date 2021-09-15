@@ -39,6 +39,7 @@ class DataBaseWriter(object):
                     endpoint_id=endpoint_id[0]
                 
                 if chat_id and endpoint_id:
+                    cursor.execute(self.__selectFromChatEndpoints.format(str(chat_id),str(endpoint_id)))
                     cursor.execute(self.__insertChatEndpointBond.format(str(chat_id),str(endpoint_id),str(datetime.now())))
         except Exception as e:
             print("DataBaseWriter Exception WriteEndpointAndChat: ",e)
@@ -47,7 +48,7 @@ class DataBaseWriter(object):
 
     __insertChat = "INSERT INTO chats(chat_id, created_at) VALUES ('{}', '{}') ON CONFLICT DO NOTHING;"
     __insertEndpoint = "INSERT INTO endpoints(name, description, state, created_at) VALUES ('{}','{}',{},'{}') ON CONFLICT DO NOTHING;"
-    __insertChatEndpointBond = "INSERT INTO chat_endpoints(chat_id, endpoint_id) VALUES ({},{}) ON CONFLICT DO NOTHING;"
+    __insertChatEndpointBond = "INSERT INTO chat_endpoints(chat_id, endpoint_id, created_at) VALUES ({},{},'{}') ON CONFLICT DO NOTHING;"
 
     __selectFromChats = "SELECT id FROM chats WHERE chat_id='{}' LIMIT 1;"
     __selectFromEndpoints = "SELECT id FROM endpoints WHERE name='{}' LIMIT 1;"
