@@ -30,11 +30,16 @@ class DataBaseWriter(object):
             with self.__connection.Connection.cursor() as cursor:
                 cursor.execute(self.__selectFromChats.format(str(data[0])))
                 chat_id = cursor.fetchone()
+                if chat_id:
+                    chat_id=chat_id[0]
                 
                 cursor.execute(self.__selectFromEndpoints.format(str(data[1])))
                 endpoint_id = cursor.fetchone()
+                if endpoint_id:
+                    endpoint_id=endpoint_id[0]
                 
-                cursor.execute(self.__insertChatEndpointBond.format(str(chat_id),str(endpoint_id),str(datetime.now())))
+                if chat_id and endpoint_id:
+                    cursor.execute(self.__insertChatEndpointBond.format(str(chat_id),str(endpoint_id),str(datetime.now())))
         except Exception as e:
             print("DataBaseWriter Exception WriteEndpointAndChat: ",e)
     
