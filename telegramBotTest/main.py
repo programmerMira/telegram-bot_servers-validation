@@ -67,6 +67,8 @@ def callback_inline(call):
                 for endpoint in tmp_endpoints:
                     endpoints+='{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
                 #***************************************************
+                if endpoints=='':
+                    endpoints='Тут пока пусто('
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
                 bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Processing...")
@@ -78,19 +80,18 @@ def callback_inline(call):
                 for endpoint in tmp_endpoints:
                     btn_text = '{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
                     btns.append(types.InlineKeyboardButton(text=btn_text, callback_data='d-{}'.format(endpoint[0])))
-                #print("BTNS:",btns)
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 btns.append(z)
                 keyboard = types.InlineKeyboardMarkup([btns],row_width=1)
-                #keyboard.add([btns])
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите ту точку, что хотите удалить:", reply_markup=keyboard)
             else:
                 #************DELETE POINT FROM DATABASE*************
                 if str(call.data).startswith('d-'):
                     databaseDeleter.DeleteChatEndpointBond([call.message.chat.id, str(call.data).replace('d-','')])
-                    call.data='start'
-                    callback_inline(call)
+                    #CHECK!!!
+                    #call.data='start'
+                    #callback_inline(call)
                 else:
                     print("not delete",call.data)
                 #***************************************************
