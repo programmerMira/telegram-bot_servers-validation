@@ -62,7 +62,7 @@ def callback_inline(call):
                 back = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 keyboard.add(add,delete,back)
                 #************GET FROM DATABASE**********************
-                tmp_endpoints = databaseReader.ReadAllEndpoints()#ReadEndpointsForChat(call.message.chat.id)
+                tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 endpoints=''
                 for endpoint in tmp_endpoints:
                     endpoints+='{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
