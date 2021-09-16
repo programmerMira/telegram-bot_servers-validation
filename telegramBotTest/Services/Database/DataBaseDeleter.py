@@ -40,4 +40,4 @@ class DataBaseDeleter(object):
     __connection = None
     __queryDeleteChat = "DELETE FROM chats WHERE chat_id='{}';"
     __queryDeleteEndpoint = "DELETE FROM endpoints WHERE name='{}';"
-    __queryDeleteChatEndpointBond = "DELETE FROM chat_endpoints WHERE chat_id={} AND endpoint_id=(SELECT id FROM endpoints WHERE name='{}' LIMIT 1);"
+    __queryDeleteChatEndpointBond = "DELETE FROM chat_endpoints WHERE chat_id=(SELECT id FROM chats WHERE chat_id='{}' LIMIT 1) AND endpoint_id=(SELECT id FROM endpoints WHERE name='{}' LIMIT 1);"
