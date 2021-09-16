@@ -5,9 +5,28 @@ import time
 from Services.BotServices.JsonParser import JsonParser
 from Services.BotServices.ConfigReader import ConfigReader
 
+from Connections.DataBaseConnection import DataBaseConnection
+from Services.Database.ConnectionReader import ConnectionReader
+from Services.Database.DataBaseReader import DataBaseReader
+from Services.Database.DataBaseUpdater import DataBaseUpdater
+from Services.Database.DataBaseWriter import DataBaseWriter
+from Services.Database.DataBaseDeleter import DataBaseDeleter
+
+#region variables
 jsonParser = JsonParser()
+
+connectionReader = ConnectionReader()
+connection = jsonParser.Pars(connectionReader.Read())
+databaseConnection = DataBaseConnection(connection)
+
 configReader = ConfigReader()
 config = jsonParser.Pars(configReader.Read())
+
+databaseReader = DataBaseReader(databaseConnection)
+databaseUpdater = DataBaseUpdater(databaseConnection)
+databaseWriter = DataBaseWriter(databaseConnection)
+databaseDeleter = DataBaseDeleter(databaseConnection)
+#endregion
 
 bot = telebot.TeleBot(config["HttpApiToken"])
 
@@ -43,7 +62,7 @@ def callback_inline(call):
                 back = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 keyboard.add(add,delete,back)
                 #************GET FROM DATABASE**********************
-                endpoints = "Точка 1 - Активна\nТочка 2 - Пассивна\nТочка 3 - Активна"
+                endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 #***************************************************
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
