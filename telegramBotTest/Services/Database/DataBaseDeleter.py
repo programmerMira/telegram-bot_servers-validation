@@ -38,6 +38,6 @@ class DataBaseDeleter(object):
             print("DataBaseDeleter Exception DeleteChatEndpointBond: ",e)
     
     __connection = None
-    __queryDeleteChat = "DELETE FROM chats WHERE chat_id='{}' CASCADE;"
-    __queryDeleteEndpoint = "DELETE FROM endpoints WHERE name='{}' CASCADE;"
+    __queryDeleteChat = "DELETE FROM chats WHERE chat_id='{}';"
+    __queryDeleteEndpoint = "DELETE FROM endpoints WHERE name='{}';"
     __queryDeleteChatEndpointBond = "DELETE FROM chat_endpoints WHERE chat_id={} AND endpoint_id=(SELECT id FROM endpoint WHERE name='{}' LIMIT 1);"
