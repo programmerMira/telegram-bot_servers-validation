@@ -74,11 +74,12 @@ def callback_inline(call):
                 keyboard = types.InlineKeyboardMarkup(row_width=1)
                 #************GET FROM DATABASE**********************
                 tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
+                btns=[]
                 for endpoint in tmp_endpoints:
-                    keyboard.add(types.InlineKeyboardButton(text=endpoint[0], callback_data=""))
+                    btns.append(types.InlineKeyboardButton(text=endpoint[0], callback_data=""))
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
-                keyboard.add(z)
+                keyboard.add(btns)
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите ту точку, что хотите удалить:", reply_markup=keyboard)
             else:
                 #************DELETE POINT FROM DATABASE*************
