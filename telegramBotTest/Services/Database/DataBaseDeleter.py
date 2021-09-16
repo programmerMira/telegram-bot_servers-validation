@@ -1,11 +1,12 @@
 
 class DataBaseDeleter(object):
-    
+    """ Class that works with database: delete-queries """
     def __init__(self, connection):
         self.__connection = connection
 
     def DeleteChat(self, data):
         """
+            Deletes chat from db
             data => chat_id
         """
         try:
@@ -16,6 +17,7 @@ class DataBaseDeleter(object):
 
     def DeleteEndpoint(self, data):
         """
+            Deletes endpoint from db
             data => endpoint_name
         """
         try:
@@ -26,6 +28,7 @@ class DataBaseDeleter(object):
 
     def DeleteChatEndpointBond(self, data):
         """
+            Deletes chat_endpoint bond from db
             data => [chat_id, endpoint_name]
         """
         try:
@@ -35,6 +38,6 @@ class DataBaseDeleter(object):
             print("DataBaseDeleter Exception DeleteChatEndpointBond: ",e)
     
     __connection = None
-    __queryDeleteChat = "DELETE FROM chats WHERE chat_id='{}';"
-    __queryDeleteEndpoint = "DELETE FROM endpoints WHERE name='{}';"
+    __queryDeleteChat = "DELETE FROM chats WHERE chat_id='{}' CASCADE;"
+    __queryDeleteEndpoint = "DELETE FROM endpoints WHERE name='{}' CASCADE;"
     __queryDeleteChatEndpointBond = "DELETE FROM chat_endpoints WHERE chat_id={} AND endpoint_id=(SELECT id FROM endpoint WHERE name='{}' LIMIT 1);"

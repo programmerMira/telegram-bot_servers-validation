@@ -1,14 +1,14 @@
 from datetime import datetime
 
 class DataBaseWriter(object):
-    
+    """ Class that works with database: insert-queries """
+
     def __init__(self, connection):
         self.__connection = connection
 
     def WriteChat(self, data):
         """
             Writes chat_id to db if not exists
-
             data => chat_id
         """
         try:
@@ -20,7 +20,6 @@ class DataBaseWriter(object):
     def WriteEndpointAndChat(self, data):
         """
             Writes endpoint and chat_endpoint if not exists
-
             data => [chat_id, endpoint_name, endpoint_description, endpoint_state]
         """
         try:

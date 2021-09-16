@@ -2,9 +2,7 @@ from Exceptions.LoseConnectionFileException import LoseConnectionFileException
 import os
 
 class ConnectionReader(object):
-    
-    def __init__(self):
-        pass
+    """ Class for reading file Connections/Connection.json """
 
     def Read(self):
         if(not os.path.exists(self.__configPath)):

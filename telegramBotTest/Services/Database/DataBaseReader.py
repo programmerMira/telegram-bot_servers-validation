@@ -1,9 +1,10 @@
 class DataBaseReader(object):
-    
+    """ Class that works with database: select-queries """
     def __init__(self, connection):
         self.__connection = connection
 
     def ReadAllEndpoints(self):
+        """ Gets endpoints` information from the table 'endpoints' """
         result = None
         try:
             with self.__connection.Connection.cursor() as cursor:
@@ -15,6 +16,7 @@ class DataBaseReader(object):
         return result
 
     def ReadAllChats(self):
+        """ Gets chats` information from the table 'chats' """
         result = None
         try:
             with self.__connection.Connection.cursor() as cursor:
@@ -26,6 +28,7 @@ class DataBaseReader(object):
         return result
 
     def ReadEndpointsForChat(self, chat_id):
+        """ Gets information about endpoints related to specific chat (chat_id) """
         result = None
         try:
             with self.__connection.Connection.cursor() as cursor:

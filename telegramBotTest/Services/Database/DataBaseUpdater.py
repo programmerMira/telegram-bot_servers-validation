@@ -1,6 +1,7 @@
 from datetime import datetime
 
 class DataBaseUpdater(object):
+    """ Class that works with database: update-queries """
     
     def __init__(self, connection):
         self.__connection = connection
