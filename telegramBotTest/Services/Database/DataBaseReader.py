@@ -29,7 +29,12 @@ class DataBaseReader(object):
         result = None
         try:
             with self.__connection.Connection.cursor() as cursor:
-                cursor.execute(self.__queryGetEndpointsForChat)
+                cursor.execute(self.__queryGetChatId.format(str(chat_id)))
+                id = cursor.fetchone()
+                if not id:
+                    return result
+                id=id[0]
+                cursor.execute(self.__queryGetEndpointsForChat.format(str(id)))
                 result = cursor.fetchall()
         except Exception as e:
             print("DataBaseReader Exception ReadEndpointsForChat: ",e)
@@ -39,4 +44,5 @@ class DataBaseReader(object):
     __connection = None
     __queryGetEndpoints = "SELECT name FROM endpoints;"
     __queryGetChats = "SELECT chat_id FROM chats;"
-    __queryGetEndpointsForChat = "SELECT name FROM endpoints WHERE id = (SELECT endpoint_id FROM chat_endpoints WHERE chat_id = {} LIMIT 1);"
+    __queryGetChatId = "SELECT id FROM chats WHERE chat_id='{}' LIMIT 1;"
+    __queryGetEndpointsForChat = "SELECT name FROM endpoints INNER JOIN chat_endpoints ON endpoints.id = chat_endpoints.endpoint_id WHERE chat_endpoints.chat_id={};"
