@@ -62,10 +62,10 @@ def callback_inline(call):
                 back = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 keyboard.add(add,delete,back)
                 #************GET FROM DATABASE**********************
-                tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
-                endpoints=[]
+                tmp_endpoints = databaseReader.ReadAllEndpoints()#ReadEndpointsForChat(call.message.chat.id)
+                endpoints=''
                 for endpoint in tmp_endpoints:
-                    endpoints.append('{} - {} - {}'.format(endpoint[0],endpoint[1], endpoint[2]))
+                    endpoints+='{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
                 #***************************************************
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
