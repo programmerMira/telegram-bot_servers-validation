@@ -77,8 +77,8 @@ def callback_inline(call):
                 btns=[]
                 for endpoint in tmp_endpoints:
                     btn_text = '{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
-                    btns.append(types.InlineKeyboardButton(text=btn_text, callback_data=endpoint[0]))
-                print("BTNS:",btns)
+                    btns.append(types.InlineKeyboardButton(text=btn_text, callback_data='d-{}'.format(endpoint[0])))
+                #print("BTNS:",btns)
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 btns.append(z)
@@ -87,7 +87,10 @@ def callback_inline(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите ту точку, что хотите удалить:", reply_markup=keyboard)
             else:
                 #************DELETE POINT FROM DATABASE*************
-                pass
+                if str(call.data).startswith('d-'):
+                    print("delete",call.data)
+                else:
+                    print("not delete",call.data)
                 #***************************************************
     except Exception as e:
         print(repr(e))
