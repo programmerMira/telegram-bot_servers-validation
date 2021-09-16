@@ -69,16 +69,16 @@ def callback_inline(call):
                 #***************************************************
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
-                bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="You need to upload the file for the uniqueness check!")
+                bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Processing...")
             elif call.data == 'delete':
                 keyboard = types.InlineKeyboardMarkup(row_width=1)
                 #************GET FROM DATABASE**********************
-                a = types.InlineKeyboardButton(text="Точка 1", callback_data="Точка 1")
-                b = types.InlineKeyboardButton(text="Точка 2", callback_data="Точка 2")
-                c = types.InlineKeyboardButton(text="Точка 3", callback_data="Точка 3")
+                tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
+                for endpoint in tmp_endpoints:
+                    keyboard.add(types.InlineKeyboardButton(text=endpoint[0], callback_data=""))
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
-                keyboard.add(a,b,c,z)
+                keyboard.add(z)
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите ту точку, что хотите удалить:", reply_markup=keyboard)
             else:
                 #************DELETE POINT FROM DATABASE*************
