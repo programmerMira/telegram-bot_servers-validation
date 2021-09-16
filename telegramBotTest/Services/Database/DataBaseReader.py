@@ -42,7 +42,7 @@ class DataBaseReader(object):
         return result
 
     __connection = None
-    __queryGetEndpoints = "SELECT name FROM endpoints;"
+    __queryGetEndpoints = "SELECT name, description, state FROM endpoints;"
     __queryGetChats = "SELECT chat_id FROM chats;"
     __queryGetChatId = "SELECT id FROM chats WHERE chat_id='{}' LIMIT 1;"
-    __queryGetEndpointsForChat = "SELECT name FROM endpoints INNER JOIN chat_endpoints ON endpoints.id = chat_endpoints.endpoint_id WHERE chat_endpoints.chat_id={};"
+    __queryGetEndpointsForChat = "SELECT name, description, state FROM endpoints INNER JOIN chat_endpoints ON endpoints.id = chat_endpoints.endpoint_id WHERE chat_endpoints.chat_id={};"
