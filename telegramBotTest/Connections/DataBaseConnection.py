@@ -1,6 +1,5 @@
 from Exceptions.DataBaseConnectionException import DataBaseConnectionException
 import psycopg2
-import os
 
 class DataBaseConnection():
     """  Class for connecting to database  

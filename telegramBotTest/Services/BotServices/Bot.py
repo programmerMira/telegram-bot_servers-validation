@@ -1,1 +1,1 @@
-#bot webhooks in class
+#bot class
