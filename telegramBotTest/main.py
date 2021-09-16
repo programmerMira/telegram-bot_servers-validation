@@ -88,7 +88,7 @@ def callback_inline(call):
             else:
                 #************DELETE POINT FROM DATABASE*************
                 if str(call.data).startswith('d-'):
-                    databaseDeleter.DeleteChatEndpointBond(call.message.chat.id, str(call.data).replace('d-',''))
+                    databaseDeleter.DeleteChatEndpointBond([call.message.chat.id, str(call.data).replace('d-','')])
                 else:
                     print("not delete",call.data)
                 #***************************************************
