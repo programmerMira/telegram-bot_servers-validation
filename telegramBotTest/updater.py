@@ -41,7 +41,7 @@ print(other_res)
 chats=databaseReader.ReadAllChats()
 print(chats)
 
-databaseUpdater.UpdateEndpointStateAndDescription(["-536304400","www.facebook.com","Facebook main page", False])
+databaseUpdater.UpdateEndpointStateAndDescription(["-536304400","www.facebook.com","Facebook main page", True])
 
 res=databaseReader.ReadAllEndpoints()
 print(res)
