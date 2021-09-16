@@ -76,7 +76,9 @@ def callback_inline(call):
                 tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 btns=[]
                 for endpoint in tmp_endpoints:
-                    btns.append(types.InlineKeyboardButton(text=endpoint[0], callback_data=""))
+                    btn_text = '{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
+                    btns.append(types.InlineKeyboardButton(text=btn_text, callback_data=endpoint[0]))
+                print("BTNS:",btns)
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 btns.append(z)
