@@ -66,7 +66,7 @@ def update():
         databaseUpdater.UpdateEndpointState([endpoint[0],validity])
         print("Updated: endpoint: {} with state: {}".format(endpoint[0],validity))
 
-schedule.every(1).minutes.do(update)
+schedule.every(int(config["TimeStampBetweenRequests"])).minutes.do(update)
 
 while True:
     schedule.run_pending()
