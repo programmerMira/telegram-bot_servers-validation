@@ -30,6 +30,7 @@ databaseDeleter = DataBaseDeleter(databaseConnection)
 
 bot = telebot.TeleBot(config["HttpApiToken"])
 
+
 #welcome message
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -90,8 +91,8 @@ def callback_inline(call):
                 if str(call.data).startswith('d-'):
                     databaseDeleter.DeleteChatEndpointBond([call.message.chat.id, str(call.data).replace('d-','')])
                     #CHECK!!!
-                    #call.data='start'
-                    #callback_inline(call)
+                    call.data='start'
+                    callback_inline(call)
                 else:
                     print("not delete",call.data)
                 #***************************************************

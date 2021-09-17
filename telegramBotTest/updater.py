@@ -29,19 +29,25 @@ databaseDeleter = DataBaseDeleter(databaseConnection)
 #region debug area: test con. to db
 #input must be chat id, e.g. "-536304400"
 chatID = "-536304401"
+databaseWriter.WriteChat(chatID)
+databaseWriter.WriteEndpointAndChat([chatID, "www.facebook.com", "Facebook main page", True])
 
 res=databaseReader.ReadAllEndpoints()
 print(res)
 
-databaseDeleter.DeleteChat("-536304401")
+other_res = databaseReader.ReadEndpointsForChat("-536304400")
+print(other_res)
 
-print(databaseReader.ReadAllChats())
+chats=databaseReader.ReadAllChats()
+print(chats)
 
-print(databaseReader.ReadAllEndpoints())
+databaseUpdater.UpdateEndpointStateAndDescription(["-536304400","www.facebook.com","Facebook main page", True])
 
-print(databaseReader.ReadEndpointsForChat("-536304401"))
+res=databaseReader.ReadAllEndpoints()
+print(res)
 
-print("*"*10,databaseReader.ReadEndpointsForChat("-536304400"))
+other_res = databaseReader.ReadEndpointsForChat("-536304400")
+print(other_res)
 
 #endregion
 
