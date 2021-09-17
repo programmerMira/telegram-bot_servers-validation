@@ -2,9 +2,7 @@ from Exceptions.LoseConfigFileException import LoseConfigFileException
 import os
 
 class ConfigReader(object):
-    
-    def __init__(self):
-        pass
+    """ Class for reading file Connections/Config.json """
 
     def Read(self):
         if(not os.path.exists(self.__configPath)):

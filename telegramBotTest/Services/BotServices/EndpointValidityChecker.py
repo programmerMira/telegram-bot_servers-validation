@@ -1,6 +1,7 @@
 import requests
 
 class EndpointValidityCheacker(object):
+    """ Class for checking endpoint`s validiry (returns True if reply is 200) """
 
     def Check(self, endpoint):
         try:
