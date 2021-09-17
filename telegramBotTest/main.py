@@ -47,6 +47,11 @@ def welcome(message):
     
     bot.send_message(message.chat.id, "Привет, {0.first_name}!\nЯ бот - <b>{1.first_name}</b>\nМоя работа - следить за активностью указанных вами точек/серверов/сайтов!".format(message.from_user, bot.get_me()), parse_mode="html", reply_markup=markup)
 
+@bot.message_handler(commands=['add'])
+def addition(message):
+    print(message.text)
+    welcome(message)
+
 #inline menu relies
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -75,9 +80,10 @@ def callback_inline(call):
                     endpoints='Тут пока пусто('
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
-                sent = bot.send_message(call.message.chat.id, 'Введите сервер/ссылку, которую хотите мониторить и краткое описание\nНапример: www.ok.com Главная страница Одноклассники')
-                bot.register_next_step_handler(sent, add_endpoint)
-                #bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Processing...")
+                keyboard = types.InlineKeyboardMarkup(row_width=1)
+                back = types.InlineKeyboardButton(text="Назад", callback_data="start")
+                keyboard.add(back)
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Для добавления нового сервера/ссылки введите сообщение следующего вида:\n<i>/add www.gmail.com Gmail Service</i>", parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'delete':
                 keyboard = types.InlineKeyboardMarkup(row_width=1)
                 #************GET FROM DATABASE**********************
