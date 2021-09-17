@@ -63,7 +63,7 @@ def update():
     endpoints = databaseReader.ReadAllEndpoints()
     for endpoint in endpoints:
         validity = endpointValidityCheck.Check(endpoint[0])
-        databaseUpdater.UpdateEndpointStateAndDescription([endpoint[0],validity])
+        databaseUpdater.UpdateEndpointState([endpoint[0],validity])
         print("Updated: endpoint: {} with state: {}".format(endpoint[0],validity))
 
 schedule.every(1).minutes.do(update)
