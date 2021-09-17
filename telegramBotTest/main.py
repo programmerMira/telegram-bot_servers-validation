@@ -104,8 +104,8 @@ def callback_inline(call):
     except Exception as e:
         print(repr(e))
 
-def add_endpoint(call):
-    print("ENTERED:",call.message.text)
+def add_endpoint(message):
+    print("ENTERED:",message.text)
 
 #RUN
 while True:
