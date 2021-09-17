@@ -3,6 +3,7 @@
 from Connections.DataBaseConnection import DataBaseConnection
 from Services.BotServices.JsonParser import JsonParser
 from Services.BotServices.ConfigReader import ConfigReader
+from Services.BotServices.EndpointValidityChecker import EndpointValidityCheacker
 from Services.Database.ConnectionReader import ConnectionReader
 from Services.Database.DataBaseReader import DataBaseReader
 from Services.Database.DataBaseUpdater import DataBaseUpdater
@@ -20,6 +21,8 @@ databaseConnection = DataBaseConnection(connection)
 configReader = ConfigReader()
 config = jsonParser.Pars(configReader.Read())
 
+endpointValidityCheck = EndpointValidityCheacker()
+
 databaseReader = DataBaseReader(databaseConnection)
 databaseUpdater = DataBaseUpdater(databaseConnection)
 databaseWriter = DataBaseWriter(databaseConnection)
@@ -28,9 +31,9 @@ databaseDeleter = DataBaseDeleter(databaseConnection)
 
 #region debug area: test con. to db
 #input must be chat id, e.g. "-536304400"
-chatID = "-536304401"
+chatID = "-536304400"
 databaseWriter.WriteChat(chatID)
-databaseWriter.WriteEndpointAndChat([chatID, "www.facebook.com", "Facebook main page", True])
+databaseWriter.WriteEndpointAndChat([chatID, "www.twitter.com", "twitter main page", endpointValidityCheck("www.twitter.com")])
 
 res=databaseReader.ReadAllEndpoints()
 print(res)
