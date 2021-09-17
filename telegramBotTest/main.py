@@ -49,7 +49,13 @@ def welcome(message):
 
 @bot.message_handler(commands=['add'])
 def addition(message):
-    print(message.text)
+    endpoint_data = str(message.text).replace('/add','')
+    endpoint_name = endpoint_data[0:endpoint_data.find(' ')]
+    endpoint_description = endpoint_data[endpoint_data.find(' '):-1]
+    endpoint_state = endpointValidityCheck.Check(endpoint_name)
+    print(endpoint_name)
+    print(endpoint_description)
+    print(endpoint_state)
     welcome(message)
 
 #inline menu relies
