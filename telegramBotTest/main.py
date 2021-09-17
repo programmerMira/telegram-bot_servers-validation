@@ -53,7 +53,7 @@ def addition(message):
     endpoint_name = endpoint_data[0:endpoint_data.find(' ')].strip()
     endpoint_description = endpoint_data[endpoint_data.find(' '):].strip()
     endpoint_state = endpointValidityCheck.Check(endpoint_name)
-    databaseWriter.WriteEndpointAndChat(message.chat.id,endpoint_name,endpoint_description, endpoint_state)
+    databaseWriter.WriteEndpointAndChat([message.chat.id,endpoint_name,endpoint_description, endpoint_state])
     welcome(message)
 
 #inline menu relies
