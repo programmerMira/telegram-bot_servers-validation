@@ -33,7 +33,7 @@ databaseDeleter = DataBaseDeleter(databaseConnection)
 #input must be chat id, e.g. "-536304400"
 chatID = "-536304400"
 databaseWriter.WriteChat(chatID)
-databaseWriter.WriteEndpointAndChat([chatID, "www.twitter.com", "twitter main page", endpointValidityCheck.Check("www.twitter.com")])
+databaseWriter.WriteEndpointAndChat([chatID, "www.vk.com", "vk main page", endpointValidityCheck.Check("www.vk.com")])
 
 res=databaseReader.ReadAllEndpoints()
 print(res)
