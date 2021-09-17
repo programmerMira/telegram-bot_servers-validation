@@ -4,6 +4,7 @@ import time
 
 from Services.BotServices.JsonParser import JsonParser
 from Services.BotServices.ConfigReader import ConfigReader
+from Services.BotServices.EndpointValidityChecker import EndpointValidityCheacker
 
 from Connections.DataBaseConnection import DataBaseConnection
 from Services.Database.ConnectionReader import ConnectionReader
@@ -21,6 +22,8 @@ databaseConnection = DataBaseConnection(connection)
 
 configReader = ConfigReader()
 config = jsonParser.Pars(configReader.Read())
+
+endpointValidityCheck = EndpointValidityCheacker()
 
 databaseReader = DataBaseReader(databaseConnection)
 databaseUpdater = DataBaseUpdater(databaseConnection)
@@ -72,6 +75,7 @@ def callback_inline(call):
                     endpoints='Тут пока пусто('
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
+                
                 bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Processing...")
             elif call.data == 'delete':
                 keyboard = types.InlineKeyboardMarkup(row_width=1)
