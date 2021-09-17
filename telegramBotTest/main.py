@@ -75,9 +75,11 @@ def callback_inline(call):
                     endpoints='Тут пока пусто('
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=endpoints, parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'add':
-                sent = bot.send_message(call.message.chat.id, 'Введите сервер/ссылку, которую хотите мониторить и краткое описание\nНапример: www.ok.com Главная страница Одноклассники')
-                bot.register_next_step_handler(sent, add_endpoint)
-                #bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Processing...")
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Введите сервер/ссылку, которую хотите мониторить и краткое описание\nНапример: www.ok.com Главная страница Одноклассники", parse_mode="html")
+                call.data = 'addition'
+                callback_inline(call)
+            elif call.data == 'addition':
+                print(call.message.text)
             elif call.data == 'delete':
                 keyboard = types.InlineKeyboardMarkup(row_width=1)
                 #************GET FROM DATABASE**********************
@@ -103,9 +105,6 @@ def callback_inline(call):
                 #***************************************************
     except Exception as e:
         print(repr(e))
-
-def add_endpoint(message):
-    print("ENTERED:",message.text)
 
 #RUN
 while True:
