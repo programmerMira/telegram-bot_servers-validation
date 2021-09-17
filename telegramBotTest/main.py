@@ -49,7 +49,7 @@ def welcome(message):
 
 @bot.message_handler(commands=['add'])
 def addition(message):
-    endpoint_data = str(message.text).replace('/add','').strip
+    endpoint_data = str(message.text).replace('/add','').strip()
     endpoint_name = endpoint_data[0:endpoint_data.find(' ')]
     endpoint_description = endpoint_data[endpoint_data.find(' '):]
     endpoint_state = endpointValidityCheck.Check(endpoint_name)
