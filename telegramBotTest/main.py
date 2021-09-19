@@ -85,7 +85,11 @@ def callback_inline(call):
                 tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 endpoints=''
                 for endpoint in tmp_endpoints:
-                    endpoints+='{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
+                    if not endpoint[2]:
+                        state="Не доступно"
+                    else:
+                        state="Доступно"
+                    endpoints+='{} - {} - {}\n'.format(endpoint[0],endpoint[1], state)
                 #***************************************************
                 if endpoints=='':
                     endpoints='Тут пока пусто('
@@ -100,7 +104,11 @@ def callback_inline(call):
                 tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 btns=[]
                 for endpoint in tmp_endpoints:
-                    btn_text = '{} - {} - {}\n'.format(endpoint[0],endpoint[1], endpoint[2])
+                    if not endpoint[2]:
+                        state="Не доступно"
+                    else:
+                        state="Доступно"
+                    btn_text = '{} - {} - {}\n'.format(endpoint[0],endpoint[1], state)
                     btns.append(types.InlineKeyboardButton(text=btn_text, callback_data='d-{}'.format(endpoint[0])))
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
