@@ -1,3 +1,4 @@
+#region imports
 import telebot
 from telebot import types
 import time
@@ -12,6 +13,7 @@ from Services.Database.DataBaseReader import DataBaseReader
 from Services.Database.DataBaseUpdater import DataBaseUpdater
 from Services.Database.DataBaseWriter import DataBaseWriter
 from Services.Database.DataBaseDeleter import DataBaseDeleter
+#endregion
 
 #region variables
 jsonParser = JsonParser()
@@ -33,7 +35,6 @@ databaseDeleter = DataBaseDeleter(databaseConnection)
 
 bot = telebot.TeleBot(config["HttpApiToken"])
 
-
 #welcome message
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -47,14 +48,19 @@ def welcome(message):
     
     bot.send_message(message.chat.id, "Привет, {0.first_name}!\nЯ бот - <b>{1.first_name}</b>\nМоя работа - следить за активностью указанных вами точек/серверов/сайтов!".format(message.from_user, bot.get_me()), parse_mode="html", reply_markup=markup)
 
+#addition handler
 @bot.message_handler(commands=['add'])
 def addition(message):
-    endpoint_data = str(message.text).replace('/add','').strip()
-    endpoint_name = endpoint_data[0:endpoint_data.find(' ')].strip()
-    endpoint_description = endpoint_data[endpoint_data.find(' '):].strip()
-    endpoint_state = endpointValidityCheck.Check(endpoint_name)
-    databaseWriter.WriteEndpointAndChat([message.chat.id,endpoint_name,endpoint_description, endpoint_state])
-    welcome(message)
+    try:
+        endpoint_data = str(message.text).replace('/add','').strip()
+        endpoint_name = endpoint_data[0:endpoint_data.find(' ')].strip()
+        endpoint_description = endpoint_data[endpoint_data.find(' '):].strip()
+        endpoint_state = endpointValidityCheck.Check(endpoint_name)
+        databaseWriter.WriteEndpointAndChat([message.chat.id,endpoint_name,endpoint_description, endpoint_state])
+        welcome(message)
+    except Exception as e:
+        bot.send_message(message.chat.id, "<i>Что-то пошло не так, пожалуста, провербте првильность вводимой информации!</i>", parse_mode="html")
+        welcome(message)
 
 #inline menu relies
 @bot.callback_query_handler(func=lambda call: True)
@@ -113,10 +119,6 @@ def callback_inline(call):
                 #***************************************************
     except Exception as e:
         print(repr(e))
-
-@bot.message_handler(content_types=['text'])
-def add_endpoint(message):
-    print("ENTERED:",message.text)
 
 #RUN
 while True:
