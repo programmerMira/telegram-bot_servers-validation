@@ -45,7 +45,7 @@ def welcome(message):
     item3 = types.InlineKeyboardButton("Удалить",callback_data="delete")
     
     markup.add(item1,item2,item3)
-    
+    databaseWriter.WriteChat(message.chat.id)
     bot.send_message(message.chat.id, "Привет, {0.first_name}!\nЯ бот - <b>{1.first_name}</b>\nМоя работа - следить за активностью указанных вами точек/серверов/сайтов!".format(message.from_user, bot.get_me()), parse_mode="html", reply_markup=markup)
 
 #addition handler
