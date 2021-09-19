@@ -56,10 +56,11 @@ def addition(message):
         endpoint_name = endpoint_data[0:endpoint_data.find(' ')].strip()
         endpoint_description = endpoint_data[endpoint_data.find(' '):].strip()
         endpoint_state = endpointValidityCheck.Check(endpoint_name)
-        databaseWriter.WriteEndpointAndChat([message.chat.id,endpoint_name,endpoint_description, endpoint_state])
+        if len(endpoint_name.strip())>0:
+            databaseWriter.WriteEndpointAndChat([message.chat.id,endpoint_name,endpoint_description, endpoint_state])
         welcome(message)
     except Exception as e:
-        bot.send_message(message.chat.id, "<i>Что-то пошло не так, пожалуста, провербте првильность вводимой информации!</i>", parse_mode="html")
+        bot.send_message(message.chat.id, "<i>Что-то пошло не так, пожалуста, проверьте првильность вводимой информации!</i>", parse_mode="html")
         welcome(message)
 
 #inline menu relies
@@ -95,7 +96,6 @@ def callback_inline(call):
                 keyboard.add(back)
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Для добавления нового сервера/ссылки введите сообщение следующего вида:\n<i>/add www.gmail.com Gmail Service</i>", parse_mode="html",  reply_markup=keyboard)
             elif call.data == 'delete':
-                keyboard = types.InlineKeyboardMarkup(row_width=1)
                 #************GET FROM DATABASE**********************
                 tmp_endpoints = databaseReader.ReadEndpointsForChat(call.message.chat.id)
                 btns=[]
@@ -105,7 +105,7 @@ def callback_inline(call):
                 #***************************************************
                 z = types.InlineKeyboardButton(text="Назад", callback_data="start")
                 btns.append(z)
-                keyboard = types.InlineKeyboardMarkup([btns],row_width=1)
+                keyboard = types.InlineKeyboardMarkup([btns],resize_keyboard=True)
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="Выберите ту точку, что хотите удалить:", reply_markup=keyboard)
             else:
                 #************DELETE POINT FROM DATABASE*************
